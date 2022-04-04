@@ -10,18 +10,18 @@
 library(shiny)
 library(magrittr)
 library(CAMPSITE)
+library(plotly)
 
+source("R/theme.R")
 
 # Define UI for application that draws a histogram
-ui <- fluidPage(
+ui <- fluidPage(theme = campsite_theme,
   
   ## App title
-  titlePanel("Macroevolution Workshop"), ## Note this comma here!
-  ## This is like in a normal function
-  ## to separate argument. You'll easily
-  ## forget it so remember to always check
-  ## it for debugging your app!
-  
+  titlePanel(fluidRow(column(width = 2, tags$img(src = "TUOS_PRIMARY_LOGO_LINEAR_BLACK.png", width = "100%")),
+  column(width = 10, h1("Opposing effects of competition and selection on macroevolutionary dynamics", style="margin-top: 0;"), style="display: flex; align-items: center;")),
+windowTitle= "Opposing effects of competition and selection on macroevolutionary dynamics"),
+
   ## Sidebar layout with input and output definitions
   sidebarLayout(
     
@@ -48,7 +48,13 @@ ui <- fluidPage(
         step = 0.005,
         width = NULL
       ),
-      actionButton("sim_button", "Simulate!")
+      actionButton("sim_button", "Simulate!"),
+      br(),
+      helpText("Repeat simulations using same competion and selection values to explore replicate variability. \n Changing any of the values resets replicates"),
+      br(),
+      br(),
+      downloadButton("report", "Generate report"),
+      width = 3
       
       
     ),
@@ -56,27 +62,26 @@ ui <- fluidPage(
     ## Main panel for displaying outputs
     mainPanel(
       tabsetPanel(
-        tabPanel("Traits at tips", plotOutput("trait_tip_plot")),
-        tabPanel("Trait disparity through time", plotOutput("trait_disp_plot")),
-        tabPanel("MNND through time", plotOutput("mnnd_plot")),
-        tabPanel("Diversification rates", plotOutput("div_plot"))
-      )
-      
-    ) 
+        tabPanel("Traits at tips", plotlyOutput("trait_tip_plot")),
+        tabPanel("Trait disparity through time", plotlyOutput("trait_disp_plot")),
+        tabPanel("MNND through time", plotlyOutput("mnnd_plot")),
+        tabPanel("Diversification rates", plotlyOutput("div_plot"))
+      ),
+      width = 9) 
   ),
   
   fluidRow(
     column(2,
-           h4("Example extant phylogeny"),
+           h5("Example extant phylogeny"),
            plotOutput("extant_phyloplot")),
     column(2,
-           h4("Example full phylogeny"),
+           h5("Example full phylogeny"),
            plotOutput("full_phyloplot")),
-    column(2,
-           h4("Lineages through time"),
-           plotOutput("ltt")),
-    column(6,
-           h4("Example trait evolution"),
+    column(3,
+           h5("Richness through time"),
+           plotlyOutput("ltt")),
+    column(5,
+           h5("Example trait evolution"),
            plotOutput("traitplot"))
   )
 )
@@ -125,23 +130,27 @@ server <- function(input, output) {
   })
   
   ## Simulate and plot a tree and save it in output$treeplot
-  output$trait_tip_plot <- renderPlot({
-    CAMPSITE::plot_tip_trait_distribution_replicates(req(v$summary_reps))
+  output$trait_tip_plot <- renderPlotly({
+    plotly::ggplotly(
+    CAMPSITE::plot_tip_trait_distribution_replicates(req(v$summary_reps)))
     
   })
   
-  output$trait_disp_plot <- renderPlot({
+  output$trait_disp_plot <- renderPlotly({
+    plotly::ggplotly(
     CAMPSITE::plot_var_vs_time_replicates(req(v$summary_reps), variable = "VAR", 
-                               ylab = "Trait disparity through time")
+                               ylab = "Trait disparity through time"))
   })
   
-  output$mnnd_plot <- renderPlot({
+  output$mnnd_plot <- renderPlotly({
+    plotly::ggplotly(
     CAMPSITE::plot_var_vs_time_replicates(req(v$summary_reps), variable = "MNND", 
-                               ylab = "MNND through time")
+                               ylab = "MNND through time"))
   })
   
-  output$div_plot <- renderPlot({
-    CAMPSITE::plot_diversification(req(v$summary))
+  output$div_plot <- renderPlotly({
+    plotly::ggplotly(
+    CAMPSITE::plot_diversification(req(v$summary)))
   })
   
   
@@ -155,16 +164,44 @@ server <- function(input, output) {
          show.tip.label = FALSE,  no.margin = TRUE)
   })
   
-  output$ltt <- renderPlot({
-    
+  output$ltt <- renderPlotly({
+    plotly::ggplotly(
+    plot_lineages_through_time_replicates(req(v$summary_reps)))
     
   })
   
   output$traitplot <- renderPlot({
     
-    plot(req(v$sim))
+    plot(req(v$sim), incipient_col = harrypotter::hp(n = 6, option = "Ravenclaw")[6])
   })
+  
+  output$report <- downloadHandler(
+    # For PDF output, change this to "report.pdf"
+    filename = paste("comp", input$competition, 
+                     "selec",   input$selection, "report.pdf", sep = "-"),
+    content = function(file) {
+      # Copy the report file to a temporary directory before processing it, in
+      # case we don't have write permissions to the current working dir (which
+      # can happen when deployed).
+      tempReport <- file.path(tempdir(), "report.Rmd")
+      file.copy("report.Rmd", tempReport, overwrite = TRUE)
+      
+      # Set up parameters to pass to Rmd document
+      #params <- list(#summary_reps = v$summary_reps,
+                     #sim = v$sim, 
+        #             competition = input$competition,
+         #            selection = input$selection)
+      #
+      # Knit the document, passing in the `params` list, and eval it in a
+      # child of the global environment (this isolates the code in the document
+      # from the code in this app).
+      rmarkdown::render(tempReport, output_file = file
+      )
+    }
+  )
 }
+  
+
 
 # Run the application 
 shinyApp(ui = ui, server = server)
