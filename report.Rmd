@@ -1,0 +1,33 @@
+---
+title: "Report: Opposing effects of competition and selection on macroevolutionary dynamics"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+### Competition value: `r input$competition`
+
+### Selection value: `r input$selection`
+
+```{r}
+CAMPSITE::plot_tip_trait_distribution_replicates(v$summary_reps)
+```
+
+```{r}
+CAMPSITE::plot_var_vs_time_replicates(v$summary_reps, variable = "VAR", 
+                               ylab = "Trait disparity through time")
+```
+
+```{r}
+CAMPSITE::plot_var_vs_time_replicates(v$summary_reps, variable = "MNND", 
+                               ylab = "MNND through time")
+```
+
+```{r}
+CAMPSITE::plot_diversification(v$summary_reps)
+```
+
