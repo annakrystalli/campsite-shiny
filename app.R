@@ -150,7 +150,7 @@ server <- function(input, output) {
   
   output$div_plot <- renderPlotly({
     plotly::ggplotly(
-    CAMPSITE::plot_diversification(req(v$summary)))
+    CAMPSITE::plot_diversification_replicates(req(v$summary)))
   })
   
   
@@ -172,7 +172,7 @@ server <- function(input, output) {
   
   output$traitplot <- renderPlot({
     
-    plot(req(v$sim), incipient_col = harrypotter::hp(n = 6, option = "Ravenclaw")[6])
+    plot(req(v$sim), incipient_col = harrypotter::hp(n = 6, option = "Ravenclaw")[1])
   })
   
   output$report <- downloadHandler(

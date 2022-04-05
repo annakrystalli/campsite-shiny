@@ -28,6 +28,6 @@ CAMPSITE::plot_var_vs_time_replicates(v$summary_reps, variable = "MNND",
 ```
 
 ```{r}
-CAMPSITE::plot_diversification(v$summary_reps)
+CAMPSITE::plot_diversification_replicates(v$summary_reps)
 ```
 
