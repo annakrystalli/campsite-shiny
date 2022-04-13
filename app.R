@@ -181,17 +181,12 @@ server <- function(input, output) {
       })
   
   observeEvent(input$reset_button, {
-    resetReplicate()
     
-    # reset plots
-    output$trait_tip_plot <- NULL
-    output$trait_disp_plot <- NULL
-    output$mnnd_plot <- NULL
-    output$div_plot <- NULL
-    output$extant_phyloplot <- NULL
-    output$full_phyloplot <- NULL
-    output$ltt <- NULL
-    output$traitplot <- NULL
+    # reset reactive values
+    v$replicate <- 1
+    v$sim <- NULL
+    v$summary_reps <- NULL
+    v$summary <-  NULL
   })
   
   observeEvent(input$sim_button, {
