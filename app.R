@@ -18,14 +18,30 @@ source("R/theme.R")
 ui <- fluidPage(theme = campsite_theme,
                 
                 ## App title
-                titlePanel(fluidRow(column(width = 2, tags$img(src = "TUOS_PRIMARY_LOGO_LINEAR_BLACK.png", width = "100%")),
-                                    column(width = 10, h1("Opposing effects of competition and selection on macroevolutionary dynamics", 
-                                                          icon("fa-github"), style="margin-top: 0;"), style="display: flex; align-items: center;")),
-                           windowTitle= "Opposing effects of competition and selection on macroevolutionary dynamics"),
-                helpText("Explore the joint influence of competition and stabilising 
+                titlePanel(fluidRow(column(width = 2, 
+                                           tags$img(src = "TUOS_PRIMARY_LOGO_LINEAR_BLACK.png", width = "100%")),
+                                    column(width = 10, 
+                                           h1("Opposing effects of competition and selection on macroevolutionary dynamics", 
+                                              style="margin-top: 0;"),
+                                           style = "display: flex; align-items: center;")
+                ),
+                windowTitle= "Opposing effects of competition and selection on macroevolutionary dynamics"),
+                
+                h5("Explore the joint influence of competition and stabilising 
                          selection on rates of trait evolution, speciation completion, 
                          and extinction using the Competition And Multiple-Peak Selection 
-                         Integrated Trait Evolution (CAMPSITE) model"),
+                         Integrated Trait Evolution (CAMPSITE) model."),
+                helpText("The app is associated with the work described in: ", 
+                         em('"Slavenko & Thomas (2022), Opposing effects of 
+                            competition and selection on macroevolutionary dynamics".'), 
+                         "using associated R package ", 
+                         a("CAMPSITE. ", 
+                           href="https://github.com/annakrystalli/CAMPSITE", 
+                           target="_blank"),
+                         "Please consult the paper for more details on the model 
+                         and analysis methods"),
+                hr(),
+                
                 
                 ## Sidebar layout with input and output definitions
                 sidebarLayout(
@@ -62,7 +78,9 @@ ui <- fluidPage(theme = campsite_theme,
                       )
                     ),
                     br(),
-                    helpText("Repeat simulations using same competion and selection values to explore replicate variability. \n Changing any of the values resets replicates"),
+                    helpText("Repeat simulations using same competion and selection 
+                             values to explore replicate variability. \n 
+                             Changing any of the values resets replicates"),
                     br(),
                     br(),
                     downloadButton("report", "Generate report"),
@@ -101,36 +119,44 @@ ui <- fluidPage(theme = campsite_theme,
                 fluidRow(
                   column(2,
                          h5("Example extant phylogeny",
-                         actionButton("phyexInfo", "",
-                                      icon = icon("info-circle"),
-                                      class="btn btn-light")),
+                            actionButton("phyexInfo", "",
+                                         icon = icon("info-circle"),
+                                         class="btn btn-light")),
                          plotOutput("extant_phyloplot")),
                   column(2,
                          h5("Example full phylogeny",
-                         actionButton("phyfullInfo", "",
-                                      icon = icon("info-circle"),
-                                      class="btn btn-light")),
+                            actionButton("phyfullInfo", "",
+                                         icon = icon("info-circle"),
+                                         class="btn btn-light")),
                          plotOutput("full_phyloplot")),
                   column(4,
                          h5("Richness through time",
-                         actionButton("richInfo", "",
-                                      icon = icon("info-circle"),
-                                      class="btn btn-light")),
+                            actionButton("richInfo", "",
+                                         icon = icon("info-circle"),
+                                         class="btn btn-light")),
                          plotlyOutput("ltt")),
                   column(4,
                          h5("Example trait evolution",
-                         actionButton("trevInfo", "",
-                                      icon = icon("info-circle"),
-                                      class="btn btn-light")),
+                            actionButton("trevInfo", "",
+                                         icon = icon("info-circle"),
+                                         class="btn btn-light")),
                          plotOutput("traitplot"))
                 ),
                 br(),
                 fluidRow(
                   hr(),
-                  helpText("The code for this app is published at", a("10.15131/shef.data.XXXXX", href="https://doi.org/10.15131/shef.data.XXXXX", target="_blank")),
-                  helpText("The code repository can be found on GitHub at ", a("github.com/annakrystalli/campsite-shiny", href="https://github.com/annakrystalli/campsite-shiny", target="_blank")),
+                  helpText("The code for this app is published at", 
+                           a("10.15131/shef.data.XXXXX", 
+                             href="https://doi.org/10.15131/shef.data.XXXXX", 
+                             target="_blank")),
+                  helpText("The code repository can be found on GitHub at ", 
+                           a("github.com/annakrystalli/campsite-shiny", 
+                             href="https://github.com/annakrystalli/campsite-shiny", 
+                             target="_blank")),
                   br(),
-                  helpText("This project was funded by a Royal Society grant RGF/EA/181082 and a Royal Society University Research fellowship to Gavin H. Thomas (UF120016, URF/R/180006).")
+                  helpText("This project was funded by a Royal Society grant 
+                           RGF/EA/181082 and a Royal Society University Research 
+                           fellowship to Gavin H. Thomas (UF120016, URF/R/180006).")
                   
                 )
 )
