@@ -50,17 +50,18 @@ ui <- fluidPage(theme = campsite_theme,
                   sidebarPanel(
                     
                     helpText("Select the strength of competition and selection:"),
-                    numericInput(
+                    sliderInput(
                       "competition",
                       "Competition value:",
                       0,
                       min = 0,
                       max = 0.1,
                       step = 0.005,
+                      round = -4,
                       width = NULL
                     ),
                     
-                    numericInput(
+                    sliderInput(
                       "selection",
                       "Selection value:",
                       0,
