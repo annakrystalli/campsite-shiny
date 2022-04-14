@@ -11,7 +11,7 @@
   "Packages": {
     "CAMPSITE": {
       "Package": "CAMPSITE",
-      "Version": "0.0.0.9003",
+      "Version": "0.0.0.9004",
       "Source": "GitHub",
       "Remotes": "kassambara/ggpubr",
       "RemoteType": "github",
@@ -19,8 +19,8 @@
       "RemoteRepo": "CAMPSITE",
       "RemoteUsername": "annakrystalli",
       "RemoteRef": "HEAD",
-      "RemoteSha": "bd51a3c5f2e7046218d04188eeea177dc5a3762c",
-      "Hash": "aec772bf518eb3cef4ec2982d3487e06",
+      "RemoteSha": "98c40065dec1caacbfff05c926eb067205d7ee1c",
+      "Hash": "f6f2c7bfafffffe8641b569a815bd180",
       "Requirements": [
         "adephylo",
         "ape",
