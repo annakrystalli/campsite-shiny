@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.1.3",
+    "Version": "4.2.1",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -13,14 +13,14 @@
       "Package": "CAMPSITE",
       "Version": "0.0.0.9004",
       "Source": "GitHub",
-      "Remotes": "kassambara/ggpubr",
       "RemoteType": "github",
+      "Remotes": "kassambara/ggpubr",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "CAMPSITE",
       "RemoteUsername": "annakrystalli",
       "RemoteRef": "HEAD",
       "RemoteSha": "98c40065dec1caacbfff05c926eb067205d7ee1c",
-      "Hash": "f6f2c7bfafffffe8641b569a815bd180",
+      "Hash": "e0c8c8a6357c0b7977dc81f849afce51",
       "Requirements": [
         "adephylo",
         "ape",
@@ -191,8 +191,14 @@
     "backports": {
       "Package": "backports",
       "Version": "1.4.1",
-      "Source": "Repository",
+      "Source": "CRAN",
       "Repository": "CRAN",
+      "RemoteType": "standard",
+      "RemotePkgRef": "backports",
+      "RemoteRef": "backports",
+      "RemoteRepos": "https://cran.rstudio.com/",
+      "RemotePkgPlatform": "aarch64-apple-darwin20",
+      "RemoteSha": "1.4.1",
       "Hash": "c39fbec8a30d23e721980b8afb31984c",
       "Requirements": []
     },
