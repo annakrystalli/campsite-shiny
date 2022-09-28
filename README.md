@@ -28,6 +28,6 @@ renv::restore()
 
 To launch the app open `app.R` and click on **Lanuch App**. Alternatively you can use 
 ```r
-source("app.R"")
+source("app.R")
 ```
 
