@@ -26,7 +26,7 @@ renv::restore()
 
 ## Running the app
 
-To launnch the app open `app.R` and click on **Lanuch App**. Alternatively you can use 
+To launch the app open `app.R` and click on **Lanuch App**. Alternatively you can use 
 ```r
 source("app.R"")
 ```
